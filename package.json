@@ -1,0 +1,33 @@
+{
+  "name": "hidden-treasures-network",
+  "version": "1.0.0",
+  "description": "A platform to discover and share hidden treasures in your community",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "install:client": "cd client && npm install",
+    "install:server": "cd server && npm install",
+    "install:all": "npm run install:client && npm run install:server",
+    "start:client": "cd client && npm start",
+    "start:server": "cd server && npm run dev",
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
+    "build:client": "cd client && npm run build",
+    "test": "npm run test:client && npm run test:server",
+    "test:client": "cd client && npm test",
+    "test:server": "cd server && npm test"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "treasures",
+    "community",
+    "discovery",
+    "network"
+  ],
+  "author": "",
+  "license": "MIT"
+}
