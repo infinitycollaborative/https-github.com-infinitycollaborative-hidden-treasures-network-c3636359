@@ -45,17 +45,17 @@ export async function computeAIMentorMatch(
 
   // Redact PII before sending to AI
   const safeStudent = redactPII({
-    interests: studentProfile.interests,
-    goals: studentProfile.goals,
-    grade: studentProfile.grade,
-    location: student.location?.state,
+    interests: (studentProfile as any).interests || [],
+    goals: (studentProfile as any).goals || [],
+    grade: (studentProfile as any).grade || 'N/A',
+    location: (student as any).location?.state,
   })
 
   const safeMentor = redactPII({
-    specialties: mentorProfile.specialty,
-    certifications: mentorProfile.certifications,
-    experience: mentorProfile.yearsOfExperience,
-    bio: mentorProfile.bio,
+    specialties: (mentorProfile as any).specialty || (mentorProfile as any).specialties || [],
+    certifications: (mentorProfile as any).certifications || [],
+    experience: (mentorProfile as any).yearsOfExperience || (mentorProfile as any).experienceYears || 0,
+    bio: (mentorProfile as any).bio || '',
   })
 
   const prompt = `You are an expert aviation/STEM youth mentorship matchmaker.
@@ -134,10 +134,10 @@ export async function computeMentorMatchScores(
     const reasons: string[] = []
 
     // Rule 1: Shared interests/specialties (+40 points max)
-    const studentInterests = studentProfile.interests || []
-    const mentorSpecialties = mentorProfile.specialty || []
-    const sharedInterests = studentInterests.filter(interest =>
-      mentorSpecialties.some(specialty => 
+    const studentInterests = (studentProfile as any).interests || []
+    const mentorSpecialties = (mentorProfile as any).specialty || (mentorProfile as any).specialties || []
+    const sharedInterests = studentInterests.filter((interest: string) =>
+      mentorSpecialties.some((specialty: string) => 
         specialty.toLowerCase().includes(interest.toLowerCase()) ||
         interest.toLowerCase().includes(specialty.toLowerCase())
       )

@@ -59,8 +59,21 @@ export default function FindMentorPage() {
 
       // Compute match scores
       if (currentProfile) {
-        const matches = computeMentorMatchScores({
-          student: currentProfile,
+        // Convert auth profile to match profile format
+        const studentForMatching: UserProfile = {
+          uid: currentProfile.uid,
+          email: currentProfile.email,
+          role: currentProfile.role as any,
+          firstName: currentProfile.displayName?.split(' ')[0] || '',
+          lastName: currentProfile.displayName?.split(' ')[1] || '',
+          displayName: currentProfile.displayName,
+          location: currentProfile.location,
+          createdAt: currentProfile.createdAt as any,
+          updatedAt: currentProfile.createdAt as any,
+          profileComplete: true,
+        }
+        const matches = await computeMentorMatchScores({
+          student: studentForMatching,
           mentors: mentorList
         })
         setMentorMatches(matches)
@@ -99,7 +112,7 @@ export default function FindMentorPage() {
         </div>
 
         {/* Profile Notice */}
-        {!currentProfile?.studentProfile?.interests?.length && (
+        {!(currentProfile as any)?.studentProfile?.interests?.length && (
           <Card className="mb-6 border-aviation-gold">
             <CardContent className="py-4">
               <p className="text-gray-700">
