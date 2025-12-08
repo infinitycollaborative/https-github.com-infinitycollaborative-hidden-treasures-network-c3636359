@@ -74,3 +74,9 @@ next-env.d.ts
 firebase-debug.log
 firestore-debug.log
 ui-debug.log
+
+# Legacy project backup
+legacy-backup/
+
+# Build logs
+build-output.log
