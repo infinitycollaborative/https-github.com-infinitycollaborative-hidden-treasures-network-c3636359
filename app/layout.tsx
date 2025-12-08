@@ -1,4 +1,12 @@
 import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata: Metadata = {
+  title: 'Hidden Treasures Network - Aviation & STEM Education',
+  description: 'Empowering students through aviation and STEM education',
 import { Inter, Montserrat, Bebas_Neue } from 'next/font/google'
 import './globals.css'
 

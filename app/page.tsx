@@ -1,9 +1,18 @@
+import Hero from './components/Hero'
+import Mission from './components/Mission'
+import SuccessStories from './components/SuccessStories'
+import Footer from './components/Footer'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Home() {
   return (
     <main className="min-h-screen">
+      <Hero />
+      <Mission />
+      <SuccessStories />
+      <Footer />
+    </main>
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center gradient-hero overflow-hidden">
         {/* Animated background pattern */}
