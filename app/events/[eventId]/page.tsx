@@ -16,6 +16,7 @@ import {
   getUpcomingEvents,
   updateRegistration,
 } from '@/lib/db-events'
+import { createNotification } from '@/lib/db-notifications'
 import { sendEventConfirmationEmail } from '@/lib/email'
 import { useAuth } from '@/hooks/use-auth'
 import { Event, EventRegistration } from '@/types/event'
@@ -76,6 +77,22 @@ export default function EventDetailPage() {
         status: capacityFull ? 'waitlisted' : 'registered',
       })
       await sendEventConfirmationEmail(registration)
+      if (user?.uid) {
+        await createNotification(user.uid, {
+          title: 'Registration confirmed',
+          message: `You're registered for ${event.title}.`,
+          type: 'event_registration',
+          link: `/events/${event.id}`,
+        })
+      }
+      if (event.organizerId) {
+        await createNotification(event.organizerId, {
+          title: 'New event signup',
+          message: `${registration.name} signed up for ${event.title}.`,
+          type: 'event_registration',
+          link: `/dashboard/organization/events/${event.id}/registrations`,
+        })
+      }
       const refreshed = await getRegistrationsForEvent(event.id)
       setRegistrations(refreshed)
     } finally {

@@ -20,6 +20,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { createNotification } from '@/lib/db-notifications'
 
 const programOptions = ['Flight', 'STEM', 'Aircraft Maintenance', 'Drone', 'Entrepreneurship'] as const
 const statusOptions = ['pending', 'approved', 'active'] as const
@@ -186,6 +187,22 @@ export default function AdminOrganizationsPage() {
 
   const handleStatusChange = async (id: string, status: OrganizationStatus) => {
     await updateOrganization(id, { status })
+    if (status === 'approved') {
+      await createNotification(id, {
+        title: 'Organization approved',
+        message: 'Your organization has been approved. Welcome aboard!',
+        type: 'organization_approved',
+        link: '/dashboard/organization/impact',
+      })
+    }
+    if (status === 'pending') {
+      await createNotification(id, {
+        title: 'Organization needs attention',
+        message: 'Your organization is pending review. Please verify your submission details.',
+        type: 'organization_rejected',
+        link: '/dashboard/organization',
+      })
+    }
     const refreshed = await getAllOrganizations()
     setOrganizations(refreshed)
   }

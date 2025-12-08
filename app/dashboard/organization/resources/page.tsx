@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useAuth } from '@/hooks/use-auth'
 import { createResource, deleteResource, getResources, updateResource } from '@/lib/db-resources'
 import { uploadResourceFile } from '@/lib/storage'
+import { createNotification, sendBroadcastNotification } from '@/lib/db-notifications'
 import { Resource } from '@/types/resource'
 
 export default function OrganizationResourcesPage() {
@@ -70,6 +71,18 @@ export default function OrganizationResourcesPage() {
         await updateResource(editing.id, payload)
       } else {
         await createResource({ id: resourceId, ...payload, views: 0, downloads: 0 })
+        await sendBroadcastNotification('admin', {
+          title: 'New resource uploaded',
+          message: `${payload.title} is ready for review.`,
+          type: 'resource_uploaded',
+          link: '/dashboard/admin/resources',
+        })
+        await createNotification(user.uid, {
+          title: 'Resource submitted',
+          message: `${payload.title} has been submitted and is awaiting review.`,
+          type: 'resource_uploaded',
+          link: '/dashboard/organization/resources',
+        })
       }
 
       const refreshed = await getResources({ organizationId: user.uid })
