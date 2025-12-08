@@ -145,8 +145,9 @@ function fallbackResourceRecommendations(
       reasons.push('Advanced content')
     }
 
-    // Category relevance
-    if (resource.category === 'aviation' || resource.category === 'stem') {
+    // Category relevance - check against valid categories
+    const aviationOrStem = ['flight', 'stem', 'drone', 'maintenance'].includes(resource.category)
+    if (aviationOrStem) {
       score += 10
       reasons.push('Core program content')
     }
@@ -176,7 +177,7 @@ export async function recommendEventsForUser(
     role: user.role,
     interests: (user as any).studentProfile?.interests || (user as any).mentorProfile?.specialty || [],
     grade: (user as any).studentProfile?.grade,
-    location: user.location?.state,
+    location: (user as any).location?.state,
     experience: (user as any).mentorProfile?.yearsOfExperience,
   })
 
@@ -184,10 +185,10 @@ export async function recommendEventsForUser(
     id: e.id,
     title: e.title,
     description: e.description,
-    category: e.category,
-    location: e.location === 'virtual' ? 'virtual' : e.location?.city,
+    type: e.type,
+    location: e.location.virtual ? 'virtual' : e.location.city,
     capacity: e.capacity,
-    registered: e.registered,
+    registeredCount: e.registeredCount,
   }))
 
   const prompt = `You are an expert aviation/STEM education event curator.
@@ -258,16 +259,19 @@ function fallbackEventRecommendations(
     (user as any).studentProfile?.interests ||
     (user as any).mentorProfile?.specialty ||
     []
-  const userState = user.location?.state
+  const userState = (user as any).location?.state
 
   const scored = events.map((event) => {
     let score = 0
     const reasons: string[] = []
 
-    // Category match
+    // Type/tag match
     const matchedInterests = userInterests.filter((interest: string) =>
-      event.category.toLowerCase().includes(interest.toLowerCase()) ||
-      event.title.toLowerCase().includes(interest.toLowerCase())
+      event.type.toLowerCase().includes(interest.toLowerCase()) ||
+      event.title.toLowerCase().includes(interest.toLowerCase()) ||
+      event.tags?.some((tag: string) => 
+        tag.toLowerCase().includes(interest.toLowerCase())
+      )
     )
 
     if (matchedInterests.length > 0) {
@@ -276,24 +280,22 @@ function fallbackEventRecommendations(
     }
 
     // Location preference
-    if (event.location === 'virtual') {
+    if (event.location.virtual) {
       score += 15
       reasons.push('Virtual event - join from anywhere')
-    } else if (event.location && typeof event.location !== 'string') {
-      if (userState && event.location.state === userState) {
-        score += 20
-        reasons.push('Local event in your area')
-      }
+    } else if (userState && event.location.state === userState) {
+      score += 20
+      reasons.push('Local event in your area')
     }
 
     // Capacity availability
-    if (event.capacity && event.registered < event.capacity) {
+    if (event.capacity && event.registeredCount < event.capacity) {
       score += 10
       reasons.push('Spots available')
     }
 
-    // Role appropriateness
-    if (event.category === 'workshop' || event.category === 'training') {
+    // Event type appropriateness
+    if (event.type === 'workshop' || event.type === 'webinar') {
       score += 15
       reasons.push('Educational opportunity')
     }

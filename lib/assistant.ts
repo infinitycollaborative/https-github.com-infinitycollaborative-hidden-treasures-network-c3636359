@@ -253,10 +253,10 @@ function extractMentorFilters(query: string): Record<string, any> {
 }
 
 /**
- * Generate contextual suggestions based on user profile
+ * Generate contextual suggestions based on user role
  */
 export function generateContextualSuggestions(
-  user: UserProfile
+  user: { role: string }
 ): string[] {
   const suggestions: string[] = []
 

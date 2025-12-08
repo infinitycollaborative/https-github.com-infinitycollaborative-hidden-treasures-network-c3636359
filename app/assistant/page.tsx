@@ -53,7 +53,7 @@ export default function AssistantPage() {
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
-      userId: (profile as any).uid || profile.id || 'user',
+      userId: (profile as any).uid || 'user',
       role: 'user',
       content: text,
       timestamp: new Date(),
@@ -66,7 +66,7 @@ export default function AssistantPage() {
     try {
       const response = await processAssistantQuery({
         query: text,
-        userId: (profile as any).uid || profile.id || 'user',
+        userId: (profile as any).uid || 'user',
         userRole: profile.role,
       })
 
