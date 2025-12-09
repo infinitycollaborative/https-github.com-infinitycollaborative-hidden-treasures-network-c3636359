@@ -1,16 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-// Initialize Stripe
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2025-11-17.clover',
-})
+// Lazy initialization - only create Stripe instance when needed
+function getStripe(): Stripe | null {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return null;
+  }
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: '2025-11-17.clover',
+  });
+}
 
 // Platform fee percentage (e.g., 3% = 0.03)
 const PLATFORM_FEE_PERCENTAGE = 0.03
 
 export async function POST(request: NextRequest) {
   try {
+    const stripe = getStripe();
+    
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Payment processing is not configured' },
+        { status: 503 }
+      )
+    }
+
     const body = await request.json()
     const { amount, currency = 'usd', metadata = {} } = body
 

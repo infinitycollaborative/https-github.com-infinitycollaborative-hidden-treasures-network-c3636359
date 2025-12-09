@@ -1,13 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { CheckCircle, Download, Home } from 'lucide-react'
+import { CheckCircle, Home, Loader2 } from 'lucide-react'
 
-export default function DonationSuccessPage() {
+function DonationSuccessContent() {
   const searchParams = useSearchParams()
   const [paymentIntent, setPaymentIntent] = useState<string | null>(null)
 
@@ -98,5 +98,21 @@ export default function DonationSuccessPage() {
         </Card>
       </div>
     </div>
+  )
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-gray-50 py-12 flex items-center justify-center">
+      <Loader2 className="h-8 w-8 animate-spin text-aviation-navy" />
+    </div>
+  )
+}
+
+export default function DonationSuccessPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <DonationSuccessContent />
+    </Suspense>
   )
 }

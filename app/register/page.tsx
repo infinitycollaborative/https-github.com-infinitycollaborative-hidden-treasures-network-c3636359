@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
@@ -10,12 +10,12 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Plane, AlertCircle, GraduationCap, Users, Building2, Heart, Check } from 'lucide-react'
+import { Plane, AlertCircle, GraduationCap, Users, Building2, Heart, Check, Loader2 } from 'lucide-react'
 import { signUpWithEmail } from '@/lib/auth'
 import { registerSchema, RegisterFormData } from '@/lib/validations'
 import { UserRole } from '@/types'
 
-export default function RegisterPage() {
+function RegisterContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const preselectedRole = searchParams.get('role') as UserRole | null
@@ -109,7 +109,6 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-aviation-navy via-blue-900 to-aviation-navy py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl w-full">
-        {/* Logo/Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Plane className="h-12 w-12 text-aviation-gold" />
@@ -122,7 +121,6 @@ export default function RegisterPage() {
           <p className="text-gray-300">Join the global aviation & STEM education movement</p>
         </div>
 
-        {/* Progress Indicator */}
         <div className="flex items-center justify-center mb-8 gap-4">
           <div className="flex items-center gap-2">
             <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-aviation-gold text-aviation-navy' : 'bg-gray-600 text-white'}`}>
@@ -139,7 +137,6 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        {/* Step 1: Role Selection */}
         {step === 1 && (
           <Card>
             <CardHeader>
@@ -173,7 +170,6 @@ export default function RegisterPage() {
           </Card>
         )}
 
-        {/* Step 2: Registration Form */}
         {step === 2 && (
           <Card>
             <CardHeader>
@@ -348,5 +344,21 @@ export default function RegisterPage() {
         </p>
       </div>
     </div>
+  )
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-aviation-navy via-blue-900 to-aviation-navy">
+      <Loader2 className="h-8 w-8 animate-spin text-aviation-gold" />
+    </div>
+  )
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <RegisterContent />
+    </Suspense>
   )
 }
