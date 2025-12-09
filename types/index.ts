@@ -1108,3 +1108,445 @@ export type UserProfileExtended =
   | TeacherProfile
   | SchoolAdminProfile
   | DistrictAdminProfile
+
+/**
+ * Phase 15: Marketplace & Funding Exchange Types
+ */
+
+// Scholarship Types
+export type ScholarshipType = 'one-time' | 'recurring' | 'full-tuition' | 'partial-tuition' | 'equipment' | 'program-specific'
+export type ScholarshipStatus = 'draft' | 'open' | 'closed' | 'awarded' | 'completed'
+export type ApplicationStatus = 'draft' | 'submitted' | 'under_review' | 'accepted' | 'rejected' | 'awarded'
+
+export interface Scholarship {
+  id: string
+
+  // Basic Info
+  name: string
+  description: string
+  type: ScholarshipType
+  amount: number // USD cents
+  currency: string // Default: 'usd'
+
+  // Sponsor
+  sponsorId: string
+  sponsorName: string
+  sponsorType: 'individual' | 'corporate' | 'foundation'
+
+  // Eligibility
+  eligibility: {
+    minAge?: number
+    maxAge?: number
+    gradeLevel?: string[]
+    location?: string[] // Countries or states
+    gpa?: number // Minimum GPA
+    flightHours?: number // Minimum flight hours
+    requireEssay: boolean
+    requireRecommendation: boolean
+    requireTranscript: boolean
+    customRequirements?: string[]
+  }
+
+  // Application Period
+  applicationPeriod: {
+    startDate: Timestamp
+    endDate: Timestamp
+    notificationDate?: Timestamp
+  }
+
+  // Funding
+  totalFunding: number // Total amount available (cents)
+  numberOfAwards: number // How many scholarships to award
+  remainingFunding: number // Amount left (cents)
+
+  // Applications
+  applicationCount: number
+  awardedCount: number
+  applicationIds: string[]
+
+  // Settings
+  isRecurring: boolean // Multi-year commitment
+  renewalCriteria?: string
+  disbursementSchedule?: {
+    type: 'one-time' | 'monthly' | 'quarterly' | 'semester'
+    payments: number // Number of payments
+  }
+
+  // Status
+  status: ScholarshipStatus
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  publishedAt?: Timestamp
+}
+
+export interface ScholarshipApplication {
+  id: string
+  scholarshipId: string
+  scholarshipName: string
+
+  // Applicant
+  studentId: string
+  studentName: string
+  studentEmail: string
+
+  // Application Data
+  personalStatement: string
+  essay?: string
+  transcript?: string // File URL
+  recommendationLetters?: string[] // File URLs
+  additionalDocuments?: string[]
+
+  // Student Info
+  age: number
+  gradeLevel: string
+  gpa?: number
+  flightHours?: number
+  achievements: string[]
+
+  // Status
+  status: ApplicationStatus
+  submittedAt?: Timestamp
+  reviewedAt?: Timestamp
+  reviewedBy?: string // Admin/sponsor ID
+  reviewNotes?: string
+  awardedAt?: Timestamp
+  awardAmount?: number // May be less than scholarship amount
+
+  createdAt: Timestamp
+  updatedAt: Timestamp
+}
+
+// Funding Request Types
+export type FundingRequestType = 'equipment' | 'program' | 'event' | 'infrastructure' | 'general'
+export type FundingRequestStatus = 'draft' | 'pending' | 'approved' | 'funded' | 'in_progress' | 'completed' | 'rejected'
+export type FundingUrgency = 'low' | 'medium' | 'high' | 'critical'
+
+export interface FundingRequest {
+  id: string
+
+  // Requester
+  requesterId: string
+  requesterName: string
+  requesterType: 'school' | 'organization' | 'teacher' | 'district'
+  schoolId?: string
+  districtId?: string
+  organizationId?: string
+
+  // Request Details
+  title: string
+  description: string
+  type: FundingRequestType
+  urgency: FundingUrgency
+
+  // Funding
+  targetAmount: number // USD cents
+  currentAmount: number // Amount raised so far
+  currency: string // Default: 'usd'
+
+  // Timeline
+  deadline?: Timestamp
+  startDate?: Timestamp
+  completionDate?: Timestamp
+
+  // Impact
+  studentsImpacted: number
+  programsImpacted: string[]
+  expectedOutcomes: string[]
+
+  // Items (for equipment requests)
+  items?: {
+    name: string
+    quantity: number
+    unitCost: number
+    totalCost: number
+    vendor?: string
+    specifications?: string
+  }[]
+
+  // Supporters
+  sponsorIds: string[] // Sponsors who funded
+  donationIds: string[] // Individual donations
+
+  // Documentation
+  budgetBreakdown?: string // File URL
+  supportingDocuments?: string[]
+  images?: string[]
+
+  // Status & Review
+  status: FundingRequestStatus
+  approvedBy?: string // Admin ID
+  approvedAt?: Timestamp
+  rejectionReason?: string
+
+  // Updates
+  updates: {
+    id: string
+    message: string
+    postedBy: string
+    postedByName: string
+    postedAt: Timestamp
+    imageUrls?: string[]
+  }[]
+
+  createdAt: Timestamp
+  updatedAt: Timestamp
+}
+
+// Sponsorship Types (Payment/Commitment)
+export type SponsorshipType = 'scholarship' | 'funding_request' | 'program' | 'student' | 'general'
+export type PaymentStatus = 'pending' | 'processing' | 'succeeded' | 'failed' | 'refunded'
+export type CommitmentType = 'one-time' | 'monthly' | 'quarterly' | 'annually' | 'multi-year'
+
+export interface Sponsorship {
+  id: string
+
+  // Sponsor
+  sponsorId: string
+  sponsorName: string
+  sponsorEmail: string
+
+  // What's being sponsored
+  type: SponsorshipType
+  targetId?: string // Scholarship ID, funding request ID, student ID, etc.
+  targetName?: string
+
+  // Financial
+  amount: number // USD cents
+  currency: string
+  commitmentType: CommitmentType
+  totalCommitment?: number // For recurring (total over all payments)
+
+  // Stripe
+  stripePaymentIntentId?: string
+  stripeCustomerId?: string
+  stripeSubscriptionId?: string // For recurring
+
+  // Payment
+  paymentStatus: PaymentStatus
+  paymentMethod?: string // 'card', 'bank_transfer', 'check'
+  transactionFee: number // Platform fee (cents)
+  netAmount: number // Amount after fees
+
+  // Recurring Details
+  isRecurring: boolean
+  recurringUntil?: Timestamp
+  nextPaymentDate?: Timestamp
+  paymentCount?: number // Payments made so far
+  totalPayments?: number // Total payments planned
+
+  // Tax Receipt
+  taxReceiptId?: string
+  taxReceiptSent: boolean
+
+  // Impact Tracking
+  impact: {
+    studentsSponsored: number
+    certificationsAwarded: number
+    flightHoursCompleted: number
+    badgesEarned: number
+    modulesCompleted: number
+    eventsAttended: number
+  }
+
+  // Visibility
+  isAnonymous: boolean
+  displayName?: string // If anonymous, show this instead
+
+  // Status
+  isActive: boolean
+  cancelledAt?: Timestamp
+  cancelReason?: string
+
+  createdAt: Timestamp
+  updatedAt: Timestamp
+}
+
+// Impact Report Types
+export type ReportPeriod = 'monthly' | 'quarterly' | 'annually' | 'custom'
+export type ReportStatus = 'draft' | 'pending_review' | 'published' | 'archived'
+
+export interface ImpactReport {
+  id: string
+
+  // Sponsor & Scope
+  sponsorId: string
+  sponsorName: string
+  sponsorshipIds: string[] // All sponsorships included in this report
+
+  // Period
+  period: ReportPeriod
+  startDate: Timestamp
+  endDate: Timestamp
+
+  // Overall Metrics
+  totalContributed: number // USD cents
+  totalStudentsImpacted: number
+  totalSchoolsSupported: number
+  totalProgramsFunded: number
+
+  // Detailed Metrics
+  metrics: {
+    // Students
+    newStudentsEnrolled: number
+    activeStudents: number
+    studentRetentionRate: number
+
+    // Academic Progress (Phase 14)
+    modulesCompleted: number
+    averageGrade: number
+    certificationsAwarded: number
+
+    // Gamification (Phase 13)
+    totalXPAwarded: number
+    badgesEarned: number
+    averageStudentLevel: number
+    questsCompleted: number
+
+    // Flight Training
+    flightHoursCompleted: number
+    soloFlights: number
+    checkrides: number
+
+    // Events & Engagement
+    eventsHosted: number
+    eventAttendance: number
+    mentorSessionsHeld: number
+  }
+
+  // Student Stories (anonymized if needed)
+  stories: {
+    studentId: string
+    studentName: string // Or "Anonymous Student"
+    age?: number
+    achievement: string
+    quote?: string
+    imageUrl?: string
+  }[]
+
+  // Program Updates
+  programUpdates: {
+    programId: string
+    programName: string
+    update: string
+    imageUrls?: string[]
+  }[]
+
+  // Financial Breakdown
+  financialBreakdown: {
+    scholarshipsAwarded: number
+    equipmentPurchased: number
+    programOperations: number
+    events: number
+    other: number
+  }
+
+  // Goals Progress
+  goalsProgress?: {
+    goal: string
+    target: number
+    achieved: number
+    unit: string // 'students', 'hours', 'certifications', etc.
+  }[]
+
+  // Status
+  status: ReportStatus
+  generatedAt: Timestamp
+  publishedAt?: Timestamp
+  sentToSponsor: boolean
+  sentAt?: Timestamp
+
+  createdAt: Timestamp
+  updatedAt: Timestamp
+}
+
+// Tax Receipt Types
+export type TaxReceiptStatus = 'pending' | 'generated' | 'sent' | 'failed'
+
+export interface TaxReceipt {
+  id: string
+
+  // Donor
+  sponsorId: string
+  sponsorName: string
+  sponsorEmail: string
+  sponsorAddress?: {
+    line1: string
+    line2?: string
+    city: string
+    state: string
+    zip: string
+    country: string
+  }
+
+  // Organization (Hidden Treasures Network)
+  organizationName: string
+  organizationEIN: string // Tax ID
+  organizationAddress: {
+    line1: string
+    city: string
+    state: string
+    zip: string
+    country: string
+  }
+
+  // Donation Details
+  sponsorshipIds: string[]
+  totalAmount: number // USD cents
+  taxYear: number
+  receiptNumber: string // Unique receipt number
+
+  // Breakdown
+  donations: {
+    date: Timestamp
+    amount: number
+    description: string
+    sponsorshipId: string
+  }[]
+
+  // Status
+  status: TaxReceiptStatus
+  pdfUrl?: string
+  generatedAt?: Timestamp
+  sentAt?: Timestamp
+
+  createdAt: Timestamp
+  updatedAt: Timestamp
+}
+
+// AI Sponsor Matching Types
+export interface SponsorMatch {
+  id: string
+
+  // What's being matched
+  targetType: 'scholarship' | 'funding_request' | 'program' | 'student'
+  targetId: string
+  targetName: string
+  targetDescription: string
+
+  // Potential sponsors (ranked by match score)
+  matches: {
+    sponsorId: string
+    sponsorName: string
+    sponsorType: 'individual' | 'corporate' | 'foundation'
+    matchScore: number // 0-100
+    reasons: string[] // Why this is a good match
+    pastContributions: number
+    interests: string[]
+  }[]
+
+  // AI Analysis
+  aiAnalysis: {
+    targetKeywords: string[]
+    targetCategories: string[]
+    recommendedSponsorTypes: ('individual' | 'corporate' | 'foundation')[]
+    suggestedAskAmount: number
+    confidenceScore: number
+  }
+
+  // Status
+  generatedAt: Timestamp
+  generatedBy: 'ai' | 'manual'
+  reviewedBy?: string
+  approvedMatches?: string[] // Sponsor IDs approved for outreach
+}
+
