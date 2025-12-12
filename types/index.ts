@@ -1,5 +1,8 @@
 import { Timestamp } from 'firebase/firestore'
 
+// Re-export all analytics types from Phase 16
+export * from './analytics'
+
 /**
  * User Role Types - Phase 11: Extended Admin Hierarchy
  * Phase 14: Added Education Roles

@@ -14,6 +14,10 @@ import {
   BarChart3,
   Menu,
   X,
+  TrendingUp,
+  Target,
+  FileBarChart,
+  Rocket,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -24,6 +28,30 @@ const adminNavItems = [
     href: '/dashboard/admin/overview',
     icon: BarChart3,
     description: 'Network-wide analytics',
+  },
+  {
+    name: 'Analytics',
+    href: '/dashboard/admin/analytics',
+    icon: TrendingUp,
+    description: 'Reports & insights',
+  },
+  {
+    name: 'Flight Plan 2030',
+    href: '/dashboard/admin/analytics/flight-plan-2030',
+    icon: Rocket,
+    description: '1M lives goal',
+  },
+  {
+    name: 'KPI Targets',
+    href: '/dashboard/admin/analytics/kpi-targets',
+    icon: Target,
+    description: 'Goal tracking',
+  },
+  {
+    name: 'Reports',
+    href: '/dashboard/admin/analytics/reports',
+    icon: FileBarChart,
+    description: 'Custom reports',
   },
   {
     name: 'Affiliates',
