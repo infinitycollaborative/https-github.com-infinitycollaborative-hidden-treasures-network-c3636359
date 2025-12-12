@@ -64,27 +64,27 @@ export function EmailCapture({
 
   return (
     <div className={className}>
-      {title && <h3 className="text-2xl md:text-3xl font-bold mb-3">{title}</h3>}
-      {description && <p className="text-base md:text-lg mb-6">{description}</p>}
+      {title && <h3 className="text-3xl md:text-4xl font-bold mb-4">{title}</h3>}
+      {description && <p className="text-lg md:text-xl mb-8 leading-relaxed">{description}</p>}
 
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
         <Input
           type="email"
           placeholder={placeholder}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={status === "loading"}
-          className="flex-1"
+          className="flex-1 text-base py-3"
           required
         />
         <Button
           type="submit"
           disabled={status === "loading"}
-          className="whitespace-nowrap"
+          className="whitespace-nowrap text-base px-6 py-3"
         >
           {status === "loading" ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
               Subscribing...
             </>
           ) : (
@@ -94,10 +94,10 @@ export function EmailCapture({
       </form>
 
       {status === "error" && (
-        <p className="text-sm text-red-600 mt-2 text-center">{message}</p>
+        <p className="text-base text-red-400 mt-3 text-center">{message}</p>
       )}
 
-      <p className="text-xs text-gray-500 mt-3 text-center">
+      <p className="text-sm text-gray-400 mt-4 text-center">
         We respect your privacy. Unsubscribe at any time.
       </p>
     </div>

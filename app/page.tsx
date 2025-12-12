@@ -48,8 +48,9 @@ export default function HomePage() {
                 </Button>
               </Link>
               <Link href="/impact">
-                <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 text-lg px-8 py-6">
+                <Button size="lg" className="bg-white/20 hover:bg-white/30 text-white border-2 border-aviation-gold text-lg px-8 py-6 font-semibold backdrop-blur-sm">
                   Explore Our Impact
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
             </div>
@@ -66,7 +67,7 @@ export default function HomePage() {
                   <p className="font-display text-4xl md:text-5xl font-bold text-aviation-gold mb-2">
                     {stat.value}
                   </p>
-                  <p className="text-sm md:text-base text-gray-200">{stat.label}</p>
+                  <p className="text-base md:text-lg text-gray-200">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -75,27 +76,27 @@ export default function HomePage() {
       </section>
 
       {/* Mission Section */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="font-heading text-4xl md:text-5xl font-bold text-aviation-navy mb-6">
                 Our Mission
               </h2>
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-700 mb-6 leading-relaxed">
                 Hidden Treasures Network unites aviation and STEM education organizations worldwide to share resources,
                 amplify impact, and create pathways for underserved youth. Through collaborative partnerships, we're
                 building the next generation of pilots, engineers, entrepreneurs, and innovators who will shape the
                 future of flight.
               </p>
-              <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
                 Powered by Infinity Aero Club Tampa Bay, Inc. (501(c)(3)) and partners like Gleim Aviation, our
                 network of educators, mentors, mentees, and sponsors is committed to reaching one million lives by 2030.
               </p>
               <Link href="/about">
-                <Button className="bg-aviation-navy hover:bg-aviation-navy/90 text-white">
+                <Button className="bg-aviation-navy hover:bg-aviation-navy/90 text-white text-lg px-6 py-3">
                   Learn More About Us
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
             </div>
@@ -104,7 +105,7 @@ export default function HomePage() {
                 src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop"
                 alt="Students engaged in STEM education"
                 fill
-                className="object-cover"
+                className="object-cover object-center"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
@@ -113,75 +114,76 @@ export default function HomePage() {
       </section>
 
       {/* Network at a Glance */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-aviation-navy/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-aviation-navy mb-4">
               A Global Network
             </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto">
               Connecting aviation and STEM organizations across continents to maximize our collective impact
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl bg-gradient-to-br from-aviation-navy to-blue-900 flex items-center justify-center">
+            <div className="relative h-[450px] rounded-2xl overflow-hidden shadow-xl bg-gradient-to-br from-aviation-navy via-blue-800 to-aviation-navy flex items-center justify-center">
               <div className="text-center text-white p-8">
-                <Globe className="h-24 w-24 mx-auto mb-4 text-aviation-gold" />
-                <p className="text-2xl font-heading font-bold mb-2">Interactive Network Map</p>
-                <p className="text-gray-300 mb-6">Coming Soon</p>
+                <Globe className="h-28 w-28 mx-auto mb-6 text-aviation-gold" />
+                <p className="text-3xl font-heading font-bold mb-3">Interactive Network Map</p>
+                <p className="text-lg text-gray-200 mb-8">Coming Soon</p>
                 <Link href="/map">
-                  <Button variant="outline" className="border-white text-white hover:bg-white/10">
+                  <Button size="lg" className="bg-aviation-gold hover:bg-aviation-gold/90 text-aviation-navy font-semibold">
                     Explore the Network
+                    <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
               </div>
             </div>
 
             <div className="space-y-6">
-              <Card className="border-aviation-sky/30">
+              <Card className="border-2 border-aviation-sky/30 hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-aviation-sky/10 rounded-lg">
-                      <Users className="h-6 w-6 text-aviation-sky" />
+                    <div className="p-3 bg-aviation-sky/10 rounded-lg">
+                      <Users className="h-7 w-7 text-aviation-sky" />
                     </div>
-                    <CardTitle className="text-aviation-navy">Diverse Network</CardTitle>
+                    <CardTitle className="text-aviation-navy text-xl">Diverse Network</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700">
+                  <p className="text-gray-700 text-lg">
                     Organizations, mentors, students, and sponsors united by a common mission to democratize aviation and STEM education.
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="border-aviation-sky/30">
+              <Card className="border-2 border-aviation-sky/30 hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-aviation-sky/10 rounded-lg">
-                      <TrendingUp className="h-6 w-6 text-aviation-sky" />
+                    <div className="p-3 bg-aviation-sky/10 rounded-lg">
+                      <TrendingUp className="h-7 w-7 text-aviation-sky" />
                     </div>
-                    <CardTitle className="text-aviation-navy">Measurable Impact</CardTitle>
+                    <CardTitle className="text-aviation-navy text-xl">Measurable Impact</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700">
+                  <p className="text-gray-700 text-lg">
                     Track and celebrate collective achievements as we progress toward our goal of impacting one million lives.
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="border-aviation-sky/30">
+              <Card className="border-2 border-aviation-sky/30 hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-aviation-sky/10 rounded-lg">
-                      <Heart className="h-6 w-6 text-aviation-sky" />
+                    <div className="p-3 bg-aviation-sky/10 rounded-lg">
+                      <Heart className="h-7 w-7 text-aviation-sky" />
                     </div>
-                    <CardTitle className="text-aviation-navy">Shared Resources</CardTitle>
+                    <CardTitle className="text-aviation-navy text-xl">Shared Resources</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700">
+                  <p className="text-gray-700 text-lg">
                     Access a growing library of educational materials, best practices, and program templates developed by network partners.
                   </p>
                 </CardContent>
@@ -192,13 +194,13 @@ export default function HomePage() {
       </section>
 
       {/* Success Stories */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-aviation-navy mb-4">
               Success Stories
             </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto">
               Real lives changed through aviation and STEM education
             </p>
           </div>
@@ -225,21 +227,21 @@ export default function HomePage() {
               }
             ].map((story) => (
               <Card key={story.name} className="overflow-hidden hover:shadow-xl transition-shadow">
-                <div className="relative h-64">
+                <div className="relative h-72">
                   <Image
                     src={story.image}
                     alt={story.name}
                     fill
-                    className="object-cover"
+                    className="object-cover object-top"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>
                 <CardContent className="p-6">
                   <h3 className="font-heading text-2xl font-bold text-aviation-navy mb-3">{story.name}</h3>
-                  <p className="text-gray-700 italic mb-4">"{story.quote}"</p>
+                  <p className="text-gray-700 text-lg italic mb-4">"{story.quote}"</p>
                   <div className="pt-4 border-t border-gray-200">
-                    <p className="text-sm font-semibold text-aviation-sky flex items-center gap-2">
-                      <GraduationCap className="h-4 w-4" />
+                    <p className="text-base font-semibold text-aviation-sky flex items-center gap-2">
+                      <GraduationCap className="h-5 w-5" />
                       {story.outcome}
                     </p>
                   </div>
@@ -250,9 +252,9 @@ export default function HomePage() {
 
           <div className="text-center mt-12">
             <Link href="/impact/stories">
-              <Button variant="outline" className="border-2 border-aviation-navy text-aviation-navy hover:bg-aviation-navy hover:text-white">
+              <Button variant="outline" className="border-2 border-aviation-navy text-aviation-navy hover:bg-aviation-navy hover:text-white text-lg px-6 py-3">
                 Read More Stories
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>
@@ -260,13 +262,13 @@ export default function HomePage() {
       </section>
 
       {/* Get Involved Tiles */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-aviation-navy mb-4">
               Get Involved
             </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto">
               Join the movement to empower youth through aviation and STEM education
             </p>
           </div>
@@ -274,25 +276,25 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                icon: <GraduationCap className="h-10 w-10" />,
+                icon: <GraduationCap className="h-12 w-12" />,
                 title: "For Students",
                 description: "Access mentorship, programs, and resources to launch your aviation or STEM career",
                 href: "/register?role=student"
               },
               {
-                icon: <Users className="h-10 w-10" />,
+                icon: <Users className="h-12 w-12" />,
                 title: "For Mentors",
                 description: "Share your expertise and inspire the next generation of aviation professionals",
                 href: "/register?role=mentor"
               },
               {
-                icon: <Plane className="h-10 w-10" />,
+                icon: <Plane className="h-12 w-12" />,
                 title: "For Organizations",
                 description: "Join our network to amplify your impact and collaborate with global partners",
                 href: "/register?role=organization"
               },
               {
-                icon: <Heart className="h-10 w-10" />,
+                icon: <Heart className="h-12 w-12" />,
                 title: "For Sponsors",
                 description: "Support youth education and create lasting impact in underserved communities",
                 href: "/register?role=sponsor"
@@ -306,7 +308,7 @@ export default function HomePage() {
                         {tile.icon}
                       </div>
                     </div>
-                    <CardTitle className="text-aviation-navy">{tile.title}</CardTitle>
+                    <CardTitle className="text-aviation-navy text-xl">{tile.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription className="text-gray-700 text-base">
@@ -321,13 +323,13 @@ export default function HomePage() {
       </section>
 
       {/* Upcoming Events Preview */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-aviation-navy mb-4">
               Upcoming Events
             </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto">
               Connect, learn, and grow with the Hidden Treasures community
             </p>
           </div>
@@ -354,28 +356,28 @@ export default function HomePage() {
               }
             ].map((event) => (
               <Card key={event.title} className="overflow-hidden hover:shadow-xl transition-shadow">
-                <div className="relative h-48">
+                <div className="relative h-52">
                   <Image
                     src={event.image}
                     alt={event.title}
                     fill
-                    className="object-cover"
+                    className="object-cover object-center"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>
                 <CardContent className="p-6">
                   <h3 className="font-heading text-xl font-bold text-aviation-navy mb-3">{event.title}</h3>
-                  <div className="space-y-2 text-sm text-gray-600">
+                  <div className="space-y-2 text-base text-gray-600">
                     <p className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-aviation-sky" />
+                      <Calendar className="h-5 w-5 text-aviation-sky" />
                       {event.date}
                     </p>
                     <p className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-aviation-sky" />
+                      <MapPin className="h-5 w-5 text-aviation-sky" />
                       {event.location}
                     </p>
                   </div>
-                  <Button className="w-full mt-4 bg-aviation-sky hover:bg-aviation-sky/90">
+                  <Button className="w-full mt-4 bg-aviation-sky hover:bg-aviation-sky/90 text-base">
                     View Details
                   </Button>
                 </CardContent>
@@ -385,9 +387,9 @@ export default function HomePage() {
 
           <div className="text-center mt-12">
             <Link href="/events">
-              <Button variant="outline" className="border-2 border-aviation-navy text-aviation-navy hover:bg-aviation-navy hover:text-white">
+              <Button variant="outline" className="border-2 border-aviation-navy text-aviation-navy hover:bg-aviation-navy hover:text-white text-lg px-6 py-3">
                 View All Events
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>
@@ -395,7 +397,7 @@ export default function HomePage() {
       </section>
 
       {/* Newsletter Signup */}
-      <section className="py-20 bg-gradient-to-br from-aviation-navy to-blue-900 text-white">
+      <section className="py-24 bg-gradient-to-br from-aviation-navy to-blue-900 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <EmailCapture
             source="homepage"
