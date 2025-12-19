@@ -203,22 +203,20 @@ export default function AboutPage() {
               <div className="mb-4">
                 <Plane className="h-16 w-16 text-aviation-sky mx-auto" />
               </div>
-              <CardTitle className="text-3xl mb-2">Our Story</CardTitle>
+              <CardTitle className="text-3xl mb-2">Infinite Collaborative</CardTitle>
               <CardDescription className="text-xl text-aviation-gold">
-                A Network Built on Purpose
+                Collaboration That Creates Legacy
               </CardDescription>
             </CardHeader>
             <CardContent className="prose max-w-none">
               <p className="text-gray-700 text-center mb-4">
-                What began as a vision to empower underserved youth through aviation has grown into a
-                thriving network of educators, mentors, mentees, partners, and sponsors. Executive leadership
-                at Infinity Aero Club Tampa Bay, Inc. works alongside strategic partners such as Gleim Aviation
-                to bring decades of aviation experience and a deep passion for youth empowerment to communities worldwide.
+                Hidden Treasures Network represents the fusion of Infinity Aero Club Tampa Bay's grassroots impact with the expertise of industry trailblazers—decades of aviation, STEM, and entrepreneurship excellence paired with a heart for empowering youth. Our pledge: connect organizations globally to share hard-earned wisdom, invest in tomorrow's leaders, and transform one million lives by 2030. Together, we don't just open doors—we build runways that last generations.
               </p>
-              <p className="text-gray-700 text-center">
-                Our vision: to build a global network where organizations work together to impact
-                one million lives by 2030, proving that when we unite our efforts, we can create
-                transformational change for the next generation.
+              <p className="text-gray-700 text-center mb-4">
+                Join the movement. Become part of an infinite network of changemakers dedicated to discovering the hidden treasure in every young person.
+              </p>
+              <p className="text-aviation-gold font-semibold text-center">
+                A 501(c)(3) nonprofit initiative based in Florida.
               </p>
             </CardContent>
           </Card>
